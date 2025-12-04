@@ -6,6 +6,8 @@ use std::{
 
 pub mod errors;
 pub mod grid;
+pub mod math;
+pub mod range;
 pub mod safe;
 
 pub fn input_arg() -> String {
