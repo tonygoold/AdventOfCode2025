@@ -1,9 +1,9 @@
 use super::errors::ParseError;
 use regex::Regex;
-use std::{cell::LazyCell, str::FromStr};
+use std::{str::FromStr, sync::LazyLock};
 
-const TURN_RE: LazyCell<Regex> =
-    LazyCell::new(|| Regex::new(r"(L|R)(\d+)").expect("unable to initialize turn regex"));
+static TURN_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(L|R)(\d+)").expect("unable to initialize turn regex"));
 
 pub enum Turn {
     Left(i32),
@@ -12,17 +12,11 @@ pub enum Turn {
 
 impl Turn {
     pub fn is_left(&self) -> bool {
-        match self {
-            Self::Left(_) => true,
-            _ => false,
-        }
+        matches!(self, Self::Left(_))
     }
 
     pub fn is_right(&self) -> bool {
-        match self {
-            Self::Right(_) => true,
-            _ => false,
-        }
+        matches!(self, Self::Right(_))
     }
 }
 
