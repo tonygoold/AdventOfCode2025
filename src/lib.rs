@@ -39,6 +39,18 @@ pub fn read_lines(path: &str) -> impl Iterator<Item = String> {
         .map(|x| x.expect("Unable to read input line"))
 }
 
+pub fn read_line_groups(path: &str) -> Vec<Vec<String>> {
+    let vecs: Vec<Vec<String>> = vec![vec![]];
+    read_lines(path).fold(vecs, |mut vecs, line| {
+        if line.is_empty() {
+            vecs.push(Vec::new());
+        } else {
+            vecs.last_mut().unwrap().push(line);
+        }
+        vecs
+    })
+}
+
 pub fn read_uints(path: &str) -> impl Iterator<Item = usize> {
     read_lines(path).map(|x| {
         x.parse::<usize>()
