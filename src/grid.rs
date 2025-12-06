@@ -66,6 +66,39 @@ impl<T> Grid<T> {
         }
         cells
     }
+
+    pub fn neighbours_with_diagonal(&self, (row, col): (usize, usize)) -> Vec<(usize, usize)> {
+        let mut cells: Vec<(usize, usize)> = Vec::with_capacity(8);
+        let not_first_row = row > 0;
+        let not_last_row = row + 1 < self.rows;
+        let not_first_col = col > 0;
+        let not_last_col = col + 1 < self.cols;
+        if not_first_row {
+            if not_first_col {
+                cells.push((row - 1, col - 1));
+            }
+            cells.push((row - 1, col));
+            if not_last_col {
+                cells.push((row - 1, col + 1));
+            }
+        }
+        if not_first_col {
+            cells.push((row, col - 1));
+        }
+        if not_last_col {
+            cells.push((row, col + 1));
+        }
+        if not_last_row {
+            if not_first_col {
+                cells.push((row + 1, col - 1));
+            }
+            cells.push((row + 1, col));
+            if not_last_col {
+                cells.push((row + 1, col + 1));
+            }
+        }
+        cells
+    }
 }
 
 impl<T> Index<usize> for Grid<T> {
