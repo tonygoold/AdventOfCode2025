@@ -8,6 +8,7 @@ pub mod errors;
 pub mod forklift;
 pub mod grid;
 pub mod math;
+pub mod point;
 pub mod range;
 pub mod safe;
 
